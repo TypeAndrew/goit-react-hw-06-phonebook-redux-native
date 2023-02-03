@@ -6,12 +6,12 @@ import { nanoid } from 'nanoid'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContact } from 'Redux/selectors';
-import { setContact, setContacts } from 'Redux/actions';
+import { setContact, setContacts, deleteContacts } from 'Redux/actions';
 
 export const App = () => {
   
    
-  const contact = useSelector(getContact)
+const contact = useSelector(getContact)
   const dispatch = useDispatch();
   const handleFilter= (evt) => {
      dispatch(setContact({ ...contact, filter: evt.target.value })) 
@@ -20,10 +20,9 @@ export const App = () => {
   
   const handleDelete = (evt) => {
     
-    
-      dispatch(setContacts( contact.contacts.filter(el => el.name !== evt.target.id))) 
+    dispatch(deleteContacts( evt.target.id )) 
       
-    };  
+  };  
    
 
   const handleSubmit = ( name  ,  number   ) => {
@@ -56,7 +55,7 @@ export const App = () => {
   },[])
 
   useEffect((valueStorage) => {
-   //// if (prevState !== contacts.length) {
+   // if (prevState !== contacts.length) {
     localStorage.setItem("contacts", JSON.stringify(contact.contacts));
     console.log('edit');
   // }
