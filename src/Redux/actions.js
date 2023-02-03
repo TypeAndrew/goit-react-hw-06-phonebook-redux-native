@@ -1,8 +1,8 @@
 
-export const setContact = contact => {
+export const setContact = filter => {
   return {
     type: "FILTER_CONTACTS",
-    payload: contact,
+    payload: filter,
   };
 };
 

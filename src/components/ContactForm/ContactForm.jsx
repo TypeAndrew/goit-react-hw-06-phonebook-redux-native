@@ -4,13 +4,7 @@ import { getContact } from '../../Redux/selectors';
 export const ContactForm = (props) => {
     
     
-    const contact = useSelector(getContact);  
-       
-    const handleChange = (evt) => {
-    
-     
-    }; 
-        
+    const contact = useSelector(getContact);     
 
     const onSubmit = (evt) =>{
         if (evt !==undefined) {
@@ -30,7 +24,7 @@ export const ContactForm = (props) => {
                         <label>Name</label>
             
                
-                        <input onChange={handleChange}
+                        <input 
                   
                             type="text"
                             name="name"

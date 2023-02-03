@@ -5,16 +5,18 @@ import { Filter } from './Filter/Filter';
 import { nanoid } from 'nanoid'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContact } from 'Redux/selectors';
+import { getContact, getFilter } from 'Redux/selectors';
 import { setContact, setContacts, deleteContacts } from 'Redux/actions';
 
 export const App = () => {
   
    
-const contact = useSelector(getContact)
+  const contacts = useSelector(getContact)
+  const filter = useSelector(getFilter)
   const dispatch = useDispatch();
-  const handleFilter= (evt) => {
-     dispatch(setContact({ ...contact, filter: evt.target.value })) 
+  
+  const handleFilter = (evt) => {
+     dispatch(setContact(evt.target.value )) 
 
   }
   
@@ -30,20 +32,20 @@ const contact = useSelector(getContact)
    
     const id = nanoid();
     
-    const userExist = contact.contacts.find(element => element.name === name.value);
+    const userExist = contacts.find(element => element.name === name.value);
 
     if (userExist !== undefined) {
         alert(`The ${name.value} is already in contacts`);
     } else {
         
-        dispatch(setContacts([...contact.contacts, {id: id, name: name.value, number: number.value }]))
+        dispatch(setContacts([...contacts, {id: id, name: name.value, number: number.value }]))
     }
  
   }
 
   const getFilterValueOn = (element) => {
     
-   return element.name.toLowerCase().includes(contact.filter.toLowerCase())
+   return element.name.toLowerCase().includes(filter.toLowerCase())
   }
 
   useEffect(()=>{
@@ -56,10 +58,10 @@ const contact = useSelector(getContact)
 
   useEffect((valueStorage) => {
    // if (prevState !== contacts.length) {
-    localStorage.setItem("contacts", JSON.stringify(contact.contacts));
+    localStorage.setItem("contacts", JSON.stringify(contacts));
     console.log('edit');
   // }
-  }, [contact.contacts])
+  }, [contacts])
     
  
     return (
@@ -79,9 +81,9 @@ const contact = useSelector(getContact)
         <h1>Phonebook </h1>
         <ContactForm  handleSubmit={handleSubmit} />
         <h2>Contacts</h2>
-        <Filter handleFilter={handleFilter} filter={contact.filter} />
+        <Filter handleFilter={handleFilter} filter={filter} />
         <ul>
-        {contact.contacts.map(element =>
+        {contacts.map(element =>
           getFilterValueOn(element) &&
           < Contacts key={element.name} element={element} onDelete={handleDelete}
            />)}
